@@ -1,0 +1,41 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+  NAMESPACE: giveaway
+  TEST_IMAGE: ghcr.io/${{ github.repository }}:${{ github.sha }}
+  DEV_IMAGE: ghcr.io/${{ github.repository }}:latest
+  PROJECT_NAME: auth
+
+jobs:
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Install kubectl
+      run:  curl -LO "https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl" 
+    
+    - name: Config kubernetes
+      env:
+        KUBE_CONFIG: ${{ secrets.KUBE_CONFIG }}
+      run: |
+        chmod +x ./kubectl && mkdir -p ~/.kube
+        mv ./kubectl ~/.kube && export PATH=$PATH:$HOME/.kube
+        touch ~/.kube/config
+        echo $KUBE_CONFIG | base64 --decode > ~/.kube/config
+    
+    - name: Apply rabbitmq kubernetes components
+      run: kubectl apply -f rabbitmq/
+
+    - name: Status
+      run: kubectl rollout status deployment/rabbitmq
