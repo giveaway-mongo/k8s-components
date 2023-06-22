@@ -26,9 +26,12 @@ jobs:
         echo $KUBE_CONFIG | base64 --decode > ~/.kube/config
     
     - name: Apply rabbitmq kubernetes components
+      run: kubectl apply -f rabbitmq/
+
+    - name: Apply ingress kubernetes components
       run: |
-        kubectl apply -f rabbitmq/
-        kubectl apply -f ingress/
+        kubectl apply -f ingress/ingress.digitalocean.yaml
+        kubectl apply -f ingress/ingress.service.yaml
 
     - name: Status
       run: |
