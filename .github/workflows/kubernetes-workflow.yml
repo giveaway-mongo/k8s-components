@@ -34,7 +34,5 @@ jobs:
         kubectl apply -f ingress/ingress.service.yaml
 
     - name: Status
-      run: |
-        kubectl rollout status deployment/rabbitmq
-        kubectl rollout status ingress/ingress-service
+      run: kubectl rollout status deployment/rabbitmq
         
