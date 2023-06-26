@@ -33,6 +33,9 @@ jobs:
         kubectl apply -f ingress/ingress.digitalocean.yaml
         kubectl apply -f ingress/ingress.service.yaml
 
+    - name: Apply tls
+      run: kubectl apply -f tls/clientissuer-acme.yaml
+
     - name: Status
       run: kubectl rollout status deployment/rabbitmq
         
