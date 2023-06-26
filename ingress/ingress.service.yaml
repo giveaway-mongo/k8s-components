@@ -4,7 +4,7 @@ metadata:
   name: my-ingress-service
   annotations:
     kubernetes.io/ingressClassName: nginx
-    cert-manager.io/issuer: letsencrypt-nginx
+    cert-manager.io/cluster-issuer: acme-issuer-try-to-see-me
 #    service.beta.kubernetes.io/do-loadbalancer-name: 'giveaway-loadbalancer'
 #    service.beta.kubernetes.io/do-loadbalancer-enable-proxy-protocol: "true"
 #    service.beta.kubernetes.io/do-loadbalancer-hostname: "ingress.giveaway.uz"
@@ -16,6 +16,7 @@ spec:
   tls:
     - hosts:
         - allgiveaway.uz
+      secretName: hello-kubernetes-tls
   rules:
     - host: localhost
       http:
