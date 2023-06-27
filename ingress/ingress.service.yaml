@@ -18,16 +18,6 @@ spec:
 #        - allgiveaway.uz
 #      secretName: hello-kubernetes-tls
   rules:
-    - host: 188.166.135.132
-      http:
-        paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: api-gateway-service
-                port:
-                  number: 80
     - host: allgiveaway.uz
       http:
         paths:
