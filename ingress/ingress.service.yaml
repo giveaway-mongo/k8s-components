@@ -4,7 +4,7 @@ metadata:
   name: my-ingress-service
   annotations:
     kubernetes.io/ingressClassName: nginx
-#    cert-manager.io/cluster-issuer: acme-issuer-try-to-see-me
+    cert-manager.io/cluster-issuer: letsencrypt-prod
 #    service.beta.kubernetes.io/do-loadbalancer-name: 'giveaway-loadbalancer'
 #    service.beta.kubernetes.io/do-loadbalancer-enable-proxy-protocol: "true"
 #    service.beta.kubernetes.io/do-loadbalancer-hostname: "ingress.giveaway.uz"
@@ -13,10 +13,10 @@ metadata:
 #    nginx.ingress.kubernetes.io/use-regex: "true"
     nginx.ingress.kubernetes.io/rewrite-target: /$1
 spec:
-#  tls:
-#    - hosts:
-#        - allgiveaway.uz
-#      secretName: hello-kubernetes-tls
+  tls:
+    - hosts:
+        - allgiveaway.uz
+      secretName: hello-kubernetes-tls
   rules:
     - host: allgiveaway.uz
       http:
