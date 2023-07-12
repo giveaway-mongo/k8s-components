@@ -28,6 +28,9 @@ jobs:
     - name: Apply rabbitmq kubernetes components
       run: kubectl apply -f rabbitmq/
 
+    - name: Apply redis kubernetes components
+      run: kubectl apply -f redis/
+
     - name: Apply ingress kubernetes components
       run: |
         kubectl apply -f ingress/ingress.digitalocean.yaml

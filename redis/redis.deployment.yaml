@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis
+spec:
+  selector:
+    matchLabels:
+      app: redis
+  template:
+    metadata:
+      labels:
+        app: redis
+    spec:
+      containers:
+        - name: redis-container
+          image: bitnami/redis:6.2.12
+          imagePullPolicy: IfNotPresent
+          envFrom:
+            - configMapRef:
+                name: redis-configmap
